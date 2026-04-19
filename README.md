@@ -9,19 +9,15 @@
   </p>
 
   <p>
-    <img src="https://img.shields.io/badge/Windows-10%20%2F%2011-0078D4?style=flat-square&logo=windows11&logoColor=white" alt="Windows">
-    <img src="https://img.shields.io/badge/Version-v5.0-16A34A?style=flat-square" alt="Version v5.0">
-    <img src="https://img.shields.io/badge/Local%20Backup-Only-0EA5E9?style=flat-square" alt="Local Backup Only">
-    <img src="https://img.shields.io/badge/No%20Install-Run%20EXE-F59E0B?style=flat-square" alt="No Install">
-    <img src="https://img.shields.io/badge/PPT%20%7C%20Word%20%7C%20PDF-Supported-7C3AED?style=flat-square" alt="PPT Word PDF">
+    <img src="素材-assets/status-strip.svg" alt="Windows 10/11, v5.0, local backup, no install, PPT Word PDF" width="780">
   </p>
 
   <p>
-    <a href="发布包-releases/v5.0/泽PPT标准备份版.zip?raw=1">
-      <img src="https://img.shields.io/badge/Download-Standard%20ZIP-16A34A?style=for-the-badge&logo=windows&logoColor=white" alt="Download Standard ZIP">
+    <a href="https://github.com/zeningshuyi-hub/ze-ppt-backup-assistant/raw/main/%E5%8F%91%E5%B8%83%E5%8C%85-releases/v5.0/%E6%B3%BDPPT%E6%A0%87%E5%87%86%E5%A4%87%E4%BB%BD%E7%89%88.zip">
+      <img src="素材-assets/button-download.svg" alt="下载标准版 ZIP" width="260">
     </a>
-    <a href="文档-docs/详细功能完整说明.txt">
-      <img src="https://img.shields.io/badge/Read-User%20Guide-2563EB?style=for-the-badge" alt="Read User Guide">
+    <a href="https://github.com/zeningshuyi-hub/ze-ppt-backup-assistant/blob/main/%E6%96%87%E6%A1%A3-docs/%E8%AF%A6%E7%BB%86%E5%8A%9F%E8%83%BD%E5%AE%8C%E6%95%B4%E8%AF%B4%E6%98%8E.txt">
+      <img src="素材-assets/button-guide.svg" alt="查看使用说明" width="260">
     </a>
   </p>
 </div>
@@ -45,11 +41,11 @@ Ze PPT Backup Assistant runs in the background and keeps local copies of opened 
 
 | 你想做什么 | 入口 |
 | --- | --- |
-| 获取成品压缩包 | [下载泽PPT标准备份版.zip](发布包-releases/v5.0/泽PPT标准备份版.zip?raw=1) |
-| 查看完整使用说明 | [详细功能完整说明.txt](文档-docs/详细功能完整说明.txt) |
+| 获取成品压缩包 | [下载泽PPT标准备份版.zip](https://github.com/zeningshuyi-hub/ze-ppt-backup-assistant/raw/main/%E5%8F%91%E5%B8%83%E5%8C%85-releases/v5.0/%E6%B3%BDPPT%E6%A0%87%E5%87%86%E5%A4%87%E4%BB%BD%E7%89%88.zip) |
+| 查看完整使用说明 | [详细功能完整说明.txt](https://github.com/zeningshuyi-hub/ze-ppt-backup-assistant/blob/main/%E6%96%87%E6%A1%A3-docs/%E8%AF%A6%E7%BB%86%E5%8A%9F%E8%83%BD%E5%AE%8C%E6%95%B4%E8%AF%B4%E6%98%8E.txt) |
 | 查看版本更新 | [CHANGELOG.txt](CHANGELOG.txt) |
-| 查看售后排查话术 | [售后排查说明.txt](文档-docs/售后排查说明.txt) |
-| 查看客户交付话术 | [客户交付话术.txt](文档-docs/客户交付话术.txt) |
+| 查看售后排查话术 | [售后排查说明.txt](https://github.com/zeningshuyi-hub/ze-ppt-backup-assistant/blob/main/%E6%96%87%E6%A1%A3-docs/%E5%94%AE%E5%90%8E%E6%8E%92%E6%9F%A5%E8%AF%B4%E6%98%8E.txt) |
+| 查看客户交付话术 | [客户交付话术.txt](https://github.com/zeningshuyi-hub/ze-ppt-backup-assistant/blob/main/%E6%96%87%E6%A1%A3-docs/%E5%AE%A2%E6%88%B7%E4%BA%A4%E4%BB%98%E8%AF%9D%E6%9C%AF.txt) |
 
 使用方式很简单：
 

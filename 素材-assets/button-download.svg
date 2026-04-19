@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="72" viewBox="0 0 300 72" role="img" aria-label="下载标准版 ZIP">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#16a34a"/>
+      <stop offset="1" stop-color="#0f766e"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-40%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#064e3b" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+  <rect x="8" y="8" width="284" height="56" rx="18" fill="url(#bg)" filter="url(#shadow)"/>
+  <path d="M42 24v18m0 0l-8-8m8 8l8-8M31 49h22" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="72" y="34" fill="#ffffff" font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" font-size="19" font-weight="700">下载标准版 ZIP</text>
+  <text x="72" y="52" fill="#dcfce7" font-family="Segoe UI, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="600">Download standard package</text>
+</svg>

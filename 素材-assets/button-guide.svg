@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="72" viewBox="0 0 300 72" role="img" aria-label="查看使用说明">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#4f46e5"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-40%" width="140%" height="180%">
+      <feDropShadow dx="0" dy="8" stdDeviation="7" flood-color="#1e3a8a" flood-opacity="0.20"/>
+    </filter>
+  </defs>
+  <rect x="8" y="8" width="284" height="56" rx="18" fill="url(#bg)" filter="url(#shadow)"/>
+  <path d="M31 23h16a8 8 0 0 1 8 8v18H39a8 8 0 0 0-8 8V23zm24 0h14a8 8 0 0 1 8 8v26a8 8 0 0 0-8-8H55V23z" fill="#dbeafe"/>
+  <text x="96" y="34" fill="#ffffff" font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" font-size="19" font-weight="700">查看使用说明</text>
+  <text x="96" y="52" fill="#dbeafe" font-family="Segoe UI, Microsoft YaHei, Arial, sans-serif" font-size="12" font-weight="600">Read user guide</text>
+</svg>
