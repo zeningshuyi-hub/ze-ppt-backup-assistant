@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="360" viewBox="0 0 1180 360" role="img" aria-label="泽PPT备份助手核心功能">
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+  <rect width="1180" height="360" rx="28" fill="#f8fafc"/>
+
+  <g font-family="Microsoft YaHei, Segoe UI, Arial, sans-serif" filter="url(#shadow)">
+    <g transform="translate(50 46)">
+      <rect width="330" height="116" rx="20" fill="#ffffff"/>
+      <circle cx="46" cy="48" r="22" fill="#dbeafe"/>
+      <text x="46" y="56" text-anchor="middle" fill="#2563eb" font-size="23" font-weight="900">1</text>
+      <text x="84" y="44" fill="#0f172a" font-size="22" font-weight="800">自动检测</text>
+      <text x="84" y="76" fill="#64748b" font-size="15">打开 PPT / Word / PDF 后自动识别</text>
+    </g>
+
+    <g transform="translate(425 46)">
+      <rect width="330" height="116" rx="20" fill="#ffffff"/>
+      <circle cx="46" cy="48" r="22" fill="#dcfce7"/>
+      <text x="46" y="56" text-anchor="middle" fill="#16a34a" font-size="23" font-weight="900">2</text>
+      <text x="84" y="44" fill="#0f172a" font-size="22" font-weight="800">本地留存</text>
+      <text x="84" y="76" fill="#64748b" font-size="15">按日期保存到 D/E/C 或自定义目录</text>
+    </g>
+
+    <g transform="translate(800 46)">
+      <rect width="330" height="116" rx="20" fill="#ffffff"/>
+      <circle cx="46" cy="48" r="22" fill="#ffedd5"/>
+      <text x="46" y="56" text-anchor="middle" fill="#ea580c" font-size="23" font-weight="900">3</text>
+      <text x="84" y="44" fill="#0f172a" font-size="22" font-weight="800">静默运行</text>
+      <text x="84" y="76" fill="#64748b" font-size="15">托盘后台工作，不打扰上课会议</text>
+    </g>
+
+    <g transform="translate(50 198)">
+      <rect width="330" height="116" rx="20" fill="#ffffff"/>
+      <circle cx="46" cy="48" r="22" fill="#f3e8ff"/>
+      <text x="46" y="56" text-anchor="middle" fill="#7c3aed" font-size="23" font-weight="900">4</text>
+      <text x="84" y="44" fill="#0f172a" font-size="22" font-weight="800">减少重复</text>
+      <text x="84" y="76" fill="#64748b" font-size="15">根据路径、修改时间和内容哈希去重</text>
+    </g>
+
+    <g transform="translate(425 198)">
+      <rect width="330" height="116" rx="20" fill="#ffffff"/>
+      <circle cx="46" cy="48" r="22" fill="#fee2e2"/>
+      <text x="46" y="56" text-anchor="middle" fill="#dc2626" font-size="23" font-weight="900">5</text>
+      <text x="84" y="44" fill="#0f172a" font-size="22" font-weight="800">空间保护</text>
+      <text x="84" y="76" fill="#64748b" font-size="15">限制占用空间，优先清理旧备份</text>
+    </g>
+
+    <g transform="translate(800 198)">
+      <rect width="330" height="116" rx="20" fill="#ffffff"/>
+      <circle cx="46" cy="48" r="22" fill="#ccfbf1"/>
+      <text x="46" y="56" text-anchor="middle" fill="#0f766e" font-size="23" font-weight="900">6</text>
+      <text x="84" y="44" fill="#0f172a" font-size="22" font-weight="800">一键体检</text>
+      <text x="84" y="76" fill="#64748b" font-size="15">复制状态信息，售后排查更快</text>
+    </g>
+  </g>
+</svg>

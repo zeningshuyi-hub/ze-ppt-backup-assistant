@@ -61,6 +61,14 @@ Ze PPT Backup Assistant runs in the background and keeps local copies of opened 
 
 ---
 
+## 产品预览 / Product Preview
+
+<div align="center">
+  <img src="素材-assets/preview-dashboard.svg" alt="泽PPT备份助手产品预览" width="94%">
+</div>
+
+---
+
 ## 工作流程 / Workflow
 
 <div align="center">
@@ -70,6 +78,10 @@ Ze PPT Backup Assistant runs in the background and keeps local copies of opened 
 ---
 
 ## 核心功能 / Features
+
+<div align="center">
+  <img src="素材-assets/feature-cards.svg" alt="泽PPT备份助手核心功能" width="94%">
+</div>
 
 | 功能 | 说明 |
 | --- | --- |
@@ -162,6 +174,8 @@ PPT 和 Word 通常比较稳定。PDF 没有统一接口，部分阅读器不会
 ```text
 素材-assets/
   banner.svg
+  preview-dashboard.svg
+  feature-cards.svg
   workflow.svg
 
 源码-src/
