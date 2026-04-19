@@ -27,7 +27,6 @@ v5.0
 - 支持磁盘空间保护，可限制每个备份位置最多占用空间
 - 支持自定义备份格式：PPT / Word / PDF
 - 支持自定义备份位置
-- 支持 Wormhole 网盘辅助临时传输
 - 首次运行显示免责声明
 - 关于/反馈窗口支持复制反馈邮箱
 
@@ -37,9 +36,9 @@ v5.0
 
 `发布包-releases/v5.0/泽PPT标准备份版.zip`
 
-标准备份版只做本地自动备份，不自动上传文件。
+标准备份版用于本地自动备份和记录查看。
 
-For normal customer delivery, use the standard backup package above. It only performs local backup and does not upload files automatically.
+For normal customer delivery, use the standard backup package above. It is focused on local file backup and backup record management.
 
 ## 默认备份目录 / Default Backup Folder
 
@@ -96,9 +95,7 @@ $csc = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
 
 ## 注意事项 / Notes
 
-- 不要把真实 `upload-config.ini` 上传到公开仓库。
-- 不要上传客户备份文件、日志、去重索引、个人 API Key 或云盘口令。
-- 如果未来需要云盘增强版，建议只在私有仓库保存，并使用示例配置替代真实配置。
+- 不要提交客户备份文件、日志、去重索引或个人隐私文件。
 - 正式对外销售时，优先分发标准备份版。
 
 ## 反馈 / Feedback

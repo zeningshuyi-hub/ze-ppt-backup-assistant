@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Management;
-using System.Net;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
@@ -144,7 +143,7 @@ namespace ZeBackupAssistant
 
             MessageBox.Show(
                 "请在本人或已授权的电脑上使用本软件。\r\n\r\n" +
-                "本软件仅用于文件备份、记录查看和用户主动上传辅助。因未获授权使用、误操作、数据丢失、隐私纠纷、网络服务变化等造成的后果，由使用者自行承担，软件开发者不承担相关责任。\r\n\r\n" +
+                "本软件仅用于本地文件备份和记录查看。因未获授权使用、误操作、数据丢失、隐私纠纷等造成的后果，由使用者自行承担，软件开发者不承担相关责任。\r\n\r\n" +
                 "继续使用即表示已阅读并同意以上内容。",
                 "泽PPT备份助手 免责声明",
                 MessageBoxButtons.OK,
@@ -234,12 +233,6 @@ namespace ZeBackupAssistant
             toolbar.Controls.Add(MakeButton("打开E盘备份", delegate { _service.OpenBackupRoot(1); }));
             toolbar.Controls.Add(MakeButton("打开当前备份", delegate { _service.OpenCurrentBackupRoot(); }));
             toolbar.Controls.Add(MakeButton("备份位置", delegate { ShowBackupLocationSettings(); }));
-            toolbar.Controls.Add(MakeButton("Wormhole网盘", delegate { OpenSelectedInWormhole(); }));
-#if !NO_CLOUD
-            toolbar.Controls.Add(MakeButton("上传到云盘", delegate { UploadSelectedToCloudflare(); }));
-            toolbar.Controls.Add(MakeButton("打开云盘", delegate { OpenCloudflareDashboard(); }));
-            toolbar.Controls.Add(MakeButton("CF说明", delegate { _service.OpenCloudflareGuide(); }));
-#endif
             toolbar.Controls.Add(MakeButton("删除选中", delegate { DeleteSelectedRecord(); }));
             toolbar.Controls.Add(MakeButton("清理失效", delegate { CleanMissingRecords(); }));
             toolbar.Controls.Add(MakeButton("清空记录", delegate { ClearRecords(); }));
@@ -451,98 +444,6 @@ namespace ZeBackupAssistant
 
             MessageBox.Show(this, "这条记录对应的 D/E 备份文件已经不存在了，可以点“清理失效”后重新备份。", "泽PPT备份助手", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return "";
-        }
-
-        private void OpenSelectedInWormhole()
-        {
-            BackupRecord record = GetSelectedOrNewestRecord();
-            if (record == null)
-            {
-                return;
-            }
-
-            string path = GetExistingBackupPathOrShow(record);
-            if (string.IsNullOrEmpty(path))
-            {
-                return;
-            }
-
-            _service.OpenWormholeForFile(path);
-            _statusLabel.Text = "已打开 Wormhole网盘，并选中/复制文件路径：" + Path.GetFileName(path);
-        }
-
-        private void UploadSelectedToCloudflare()
-        {
-            BackupRecord record = GetSelectedOrNewestRecord();
-            if (record == null)
-            {
-                return;
-            }
-
-            RunUpload("Cloudflare", record, delegate(BackupRecord uploadRecord)
-            {
-                return _service.UploadToCloudflare(uploadRecord);
-            });
-        }
-
-        private void OpenCloudflareDashboard()
-        {
-            try
-            {
-                try
-                {
-                    Clipboard.SetText(_service.GetCloudflareAdminToken());
-                }
-                catch
-                {
-                }
-                Process.Start(_service.GetCloudflareDashboardUrl());
-                _statusLabel.Text = "已打开云盘后台，管理口令已复制。";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(this, "打开云盘失败：\r\n\r\n" + ex.Message, "泽PPT备份助手", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private void RunUpload(string serviceName, BackupRecord record, Func<BackupRecord, string> uploadAction)
-        {
-            string path = GetExistingBackupPathOrShow(record);
-            if (string.IsNullOrEmpty(path))
-            {
-                return;
-            }
-
-            _statusLabel.Text = "正在上传到 " + serviceName + "：" + Path.GetFileName(path);
-
-            ThreadPool.QueueUserWorkItem(delegate
-            {
-                try
-                {
-                    string link = uploadAction(record);
-                    BeginInvoke((MethodInvoker)delegate
-                    {
-                        try
-                        {
-                            Clipboard.SetText(link);
-                        }
-                        catch
-                        {
-                        }
-
-                        _statusLabel.Text = serviceName + " 上传成功，链接已复制，也可以在云盘后台查看。";
-                        MessageBox.Show(this, "上传成功，链接已经复制到剪贴板。\r\n\r\n以后也可以点“打开云盘”查看上传记录。\r\n\r\n" + link, "泽PPT备份助手", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    });
-                }
-                catch (Exception ex)
-                {
-                    BeginInvoke((MethodInvoker)delegate
-                    {
-                        _statusLabel.Text = serviceName + " 上传失败：" + ex.Message;
-                        MessageBox.Show(this, serviceName + " 上传失败：\r\n\r\n" + ex.Message, "泽PPT备份助手", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    });
-                }
-            });
         }
 
         private void DeleteSelectedRecord()
@@ -1277,8 +1178,6 @@ namespace ZeBackupAssistant
             @"D:\" + BackupFolderName,
             @"E:\" + BackupFolderName
         };
-        private const string WormholeUrl = "https://wormhole.app/";
-        private const string UploadConfigFileName = "upload-config.ini";
         private const string SettingsFileName = "settings.ini";
         private const int DefaultMaxBackupSizeMb = 0;
         private const string AutoStartValueName = "ZePPTBackupAssistant";
@@ -1355,11 +1254,6 @@ namespace ZeBackupAssistant
         public string IndexFilePath
         {
             get { return Path.Combine(GetDataRoot(), "日志", "backup-index.tsv"); }
-        }
-
-        public string UploadConfigPath
-        {
-            get { return Path.Combine(GetDataRoot(), "日志", UploadConfigFileName); }
         }
 
         public string SettingsFilePath
@@ -1756,85 +1650,6 @@ namespace ZeBackupAssistant
             }
 
             return "";
-        }
-
-        public void OpenWormholeForFile(string path)
-        {
-            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
-            {
-                throw new FileNotFoundException("没有找到要上传的备份文件。", path);
-            }
-
-            try
-            {
-                Clipboard.SetText(path);
-            }
-            catch
-            {
-            }
-
-            try
-            {
-                Process.Start("explorer.exe", "/select,\"" + path + "\"");
-            }
-            catch
-            {
-            }
-
-            Process.Start(WormholeUrl);
-            Log("已打开 Wormhole网盘，并选中文件：" + path);
-        }
-
-        public void OpenCloudflareGuide()
-        {
-            try
-            {
-                string projectPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "cloudflare-pages-upload");
-                string guidePath = Path.Combine(projectPath, "使用说明-CloudflarePages上传页.txt");
-                if (File.Exists(guidePath))
-                {
-                    Process.Start("notepad.exe", guidePath);
-                    return;
-                }
-
-                if (Directory.Exists(projectPath))
-                {
-                    Process.Start("explorer.exe", "\"" + projectPath + "\"");
-                }
-            }
-            catch
-            {
-            }
-        }
-
-        public string UploadToCloudflare(BackupRecord record)
-        {
-            string path = FindExistingBackupFile(record);
-            if (string.IsNullOrEmpty(path))
-            {
-                throw new FileNotFoundException("这条记录对应的 D/E 备份文件已经不存在。");
-            }
-
-            UploadConfig config = LoadUploadConfig();
-            string link = UploadRawToCloudflare(path, config);
-            Log("Cloudflare 上传成功：" + path + " -> " + link);
-            return link;
-        }
-
-        public string GetCloudflareDashboardUrl()
-        {
-            UploadConfig config = LoadUploadConfig();
-            string url = config.CloudflareUploadUrl;
-            if (url.EndsWith("/api/upload", StringComparison.OrdinalIgnoreCase))
-            {
-                url = url.Substring(0, url.Length - "/api/upload".Length);
-            }
-            return url.TrimEnd('/') + "/admin.html#token=" + Uri.EscapeDataString(config.AdminToken);
-        }
-
-        public string GetCloudflareAdminToken()
-        {
-            return LoadUploadConfig().AdminToken;
         }
 
         public List<BackupRecord> GetRecentBackups(int count)
@@ -3840,292 +3655,6 @@ namespace ZeBackupAssistant
             );
         }
 
-        private string UploadRawToCloudflare(string path, UploadConfig config)
-        {
-            PrepareTls();
-
-            FileInfo info = new FileInfo(path);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(config.CloudflareUploadUrl);
-            request.Method = "POST";
-            request.UserAgent = "ZeBackupAssistant/1.3";
-            request.Timeout = 300000;
-            request.ReadWriteTimeout = 300000;
-            request.ContentType = GetContentType(path);
-            request.Headers["X-Upload-Token"] = config.UploadToken;
-            request.Headers["X-File-Name"] = Uri.EscapeDataString(info.Name);
-            request.ContentLength = info.Length;
-
-            using (Stream requestStream = request.GetRequestStream())
-            {
-                using (FileStream fileStream = File.OpenRead(path))
-                {
-                    CopyStream(fileStream, requestStream);
-                }
-            }
-
-            string responseText = ReadWebResponseText(request);
-            string link = ExtractJsonValue(responseText, "link");
-            if (string.IsNullOrEmpty(link))
-            {
-                link = ExtractJsonValue(responseText, "url");
-            }
-            if (string.IsNullOrEmpty(link))
-            {
-                throw new InvalidOperationException("Cloudflare 上传页没有返回链接：" + TrimForMessage(responseText));
-            }
-
-            return link;
-        }
-
-        private UploadConfig LoadUploadConfig()
-        {
-            string configPath = FindExistingUploadConfigPath();
-            if (string.IsNullOrEmpty(configPath))
-            {
-                EnsureCloudflareSampleConfig();
-                configPath = UploadConfigPath;
-            }
-
-            Dictionary<string, string> values = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            string[] lines = File.ReadAllLines(configPath, Encoding.UTF8);
-            for (int i = 0; i < lines.Length; i++)
-            {
-                string line = lines[i].Trim();
-                if (line.Length == 0 || line.StartsWith("#"))
-                {
-                    continue;
-                }
-
-                int equals = line.IndexOf('=');
-                if (equals <= 0)
-                {
-                    continue;
-                }
-
-                string key = line.Substring(0, equals).Trim();
-                string value = line.Substring(equals + 1).Trim();
-                values[key] = value;
-            }
-
-            string uploadUrl = GetConfigValue(values, "CloudflareUploadUrl");
-            string token = GetConfigValue(values, "UploadToken");
-            string adminToken = GetConfigValue(values, "AdminToken");
-            if (!Uri.IsWellFormedUriString(uploadUrl, UriKind.Absolute) || uploadUrl.IndexOf("你的", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                throw new InvalidOperationException("还没配置 Cloudflare 上传地址。配置文件：" + configPath + "，把 pages.dev 的 /api/upload 地址填进去。");
-            }
-            if (string.IsNullOrWhiteSpace(token) || token.IndexOf("换成", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                throw new InvalidOperationException("还没配置 Cloudflare 上传口令。打开 " + configPath + "，把 UploadToken 换成你在 Cloudflare 设置的 UPLOAD_TOKEN。");
-            }
-            if (string.IsNullOrWhiteSpace(adminToken) || adminToken.IndexOf("换成", StringComparison.OrdinalIgnoreCase) >= 0)
-            {
-                adminToken = token;
-            }
-
-            return new UploadConfig(uploadUrl, token, adminToken);
-        }
-
-        private string FindExistingUploadConfigPath()
-        {
-            string[] paths = GetUploadConfigCandidatePaths();
-            for (int i = 0; i < paths.Length; i++)
-            {
-                if (File.Exists(paths[i]))
-                {
-                    return paths[i];
-                }
-            }
-            return "";
-        }
-
-        private string[] GetUploadConfigCandidatePaths()
-        {
-            List<string> paths = new List<string>();
-
-            try
-            {
-                string exeDir = Path.GetDirectoryName(Application.ExecutablePath);
-                if (!string.IsNullOrEmpty(exeDir))
-                {
-                    AddUniqueRoot(paths, Path.Combine(exeDir, UploadConfigFileName));
-                }
-            }
-            catch
-            {
-            }
-
-            AddUniqueRoot(paths, UploadConfigPath);
-
-            string[] roots = GetAllBackupRoots();
-            for (int i = 0; i < roots.Length; i++)
-            {
-                AddUniqueRoot(paths, Path.Combine(roots[i], "日志", UploadConfigFileName));
-            }
-
-            return paths.ToArray();
-        }
-
-        private void EnsureCloudflareSampleConfig()
-        {
-            EnsureLogDirectory();
-            if (!string.IsNullOrEmpty(FindExistingUploadConfigPath()))
-            {
-                return;
-            }
-
-            string text =
-                "# 泽PPT备份助手 Cloudflare 上传配置\r\n" +
-                "# 当前推荐部署 D:\\安卓软件\\泽宁ppt\\cloudflare-pages-upload 里的 Pages/KV 上传页。\r\n" +
-                "# 地址格式：https://你的项目名.pages.dev/api/upload\r\n" +
-                "CloudflareUploadUrl=https://你的项目名.pages.dev/api/upload\r\n" +
-                "\r\n" +
-                "# 这里要和 Cloudflare Pages 里设置的 UPLOAD_TOKEN secret 完全一致。\r\n" +
-                "UploadToken=换成你设置的UPLOAD_TOKEN\r\n" +
-                "\r\n" +
-                "# 这里要和 Cloudflare Pages 里设置的 ADMIN_TOKEN secret 完全一致，只给自己后台管理用。\r\n" +
-                "AdminToken=换成你设置的ADMIN_TOKEN\r\n";
-            File.WriteAllText(UploadConfigPath, text, Encoding.UTF8);
-        }
-
-        private static string GetConfigValue(Dictionary<string, string> values, string key)
-        {
-            string value;
-            if (values.TryGetValue(key, out value))
-            {
-                return value;
-            }
-            return "";
-        }
-
-        private static void PrepareTls()
-        {
-            ServicePointManager.SecurityProtocol = ServicePointManager.SecurityProtocol | (SecurityProtocolType)3072;
-        }
-
-        private static string ReadWebResponseText(HttpWebRequest request)
-        {
-            try
-            {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    return ReadStreamText(response.GetResponseStream());
-                }
-            }
-            catch (WebException ex)
-            {
-                string status = "";
-                string body = "";
-                HttpWebResponse response = ex.Response as HttpWebResponse;
-                if (response != null)
-                {
-                    status = "HTTP " + ((int)response.StatusCode).ToString() + " " + response.StatusDescription + "。";
-                    body = ReadStreamText(response.GetResponseStream());
-                    response.Close();
-                }
-                throw new InvalidOperationException(status + TrimForMessage(body.Length > 0 ? body : ex.Message));
-            }
-        }
-
-        private static string ReadStreamText(Stream stream)
-        {
-            if (stream == null)
-            {
-                return "";
-            }
-
-            using (StreamReader reader = new StreamReader(stream, Encoding.UTF8))
-            {
-                return reader.ReadToEnd();
-            }
-        }
-
-        private static string ExtractJsonValue(string json, string name)
-        {
-            if (string.IsNullOrEmpty(json))
-            {
-                return "";
-            }
-
-            Match match = Regex.Match(json, "\"" + Regex.Escape(name) + "\"\\s*:\\s*\"((?:\\\\.|[^\"])*)\"", RegexOptions.IgnoreCase);
-            if (!match.Success)
-            {
-                return "";
-            }
-
-            try
-            {
-                return Regex.Unescape(match.Groups[1].Value);
-            }
-            catch
-            {
-                return match.Groups[1].Value;
-            }
-        }
-
-        private static string TrimForMessage(string value)
-        {
-            if (string.IsNullOrEmpty(value))
-            {
-                return "";
-            }
-
-            value = value.Replace("\r", " ").Replace("\n", " ").Trim();
-            if (value.Length > 300)
-            {
-                return value.Substring(0, 300) + "...";
-            }
-            return value;
-        }
-
-        private static void CopyStream(Stream source, Stream target)
-        {
-            byte[] buffer = new byte[64 * 1024];
-            int read;
-            while ((read = source.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                target.Write(buffer, 0, read);
-            }
-        }
-
-        private static string GetContentType(string path)
-        {
-            string ext = Path.GetExtension(path).ToLowerInvariant();
-            if (ext == ".pdf")
-            {
-                return "application/pdf";
-            }
-            if (ext == ".ppt")
-            {
-                return "application/vnd.ms-powerpoint";
-            }
-            if (ext == ".pptx")
-            {
-                return "application/vnd.openxmlformats-officedocument.presentationml.presentation";
-            }
-            if (ext == ".pps")
-            {
-                return "application/vnd.ms-powerpoint";
-            }
-            if (ext == ".ppsx")
-            {
-                return "application/vnd.openxmlformats-officedocument.presentationml.slideshow";
-            }
-            if (ext == ".doc")
-            {
-                return "application/msword";
-            }
-            if (ext == ".docx")
-            {
-                return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-            }
-            if (ext == ".rtf")
-            {
-                return "application/rtf";
-            }
-            return "application/octet-stream";
-        }
-
         private static string[] SplitSavedPaths(string savedPaths)
         {
             if (string.IsNullOrWhiteSpace(savedPaths))
@@ -4418,20 +3947,6 @@ namespace ZeBackupAssistant
             Path = path;
             Kind = kind;
             AppName = appName;
-        }
-    }
-
-    internal sealed class UploadConfig
-    {
-        public readonly string CloudflareUploadUrl;
-        public readonly string UploadToken;
-        public readonly string AdminToken;
-
-        public UploadConfig(string cloudflareUploadUrl, string uploadToken, string adminToken)
-        {
-            CloudflareUploadUrl = cloudflareUploadUrl;
-            UploadToken = uploadToken;
-            AdminToken = adminToken;
         }
     }
 

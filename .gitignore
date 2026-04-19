@@ -7,7 +7,6 @@ settings.ini
 backup-index.tsv
 
 # Secret config / 私密配置
-upload-config.ini
 *.key
 *.pem
 *.pfx
