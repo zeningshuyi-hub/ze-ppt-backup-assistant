@@ -33,7 +33,11 @@
 Ze PPT Backup Assistant runs in the background and keeps local copies of opened PPT, Word, and PDF files, so important classroom or meeting files are easier to find later.
 
 > [!IMPORTANT]
-> 请在本人或已授权的电脑上使用本软件。因未获授权使用、误操作、数据丢失、隐私纠纷等造成的后果，由使用者自行承担。
+> **使用前必读 / Read Before Use**
+>
+> **中文：** 请仅在本人电脑，或已获得明确授权的电脑上使用本软件。本软件用于本地文件备份和记录查看。因未获授权使用、误操作、数据丢失、隐私纠纷等造成的一切后果，由使用者自行承担。
+>
+> **English:** Use this software only on your own computer, or on computers where you have explicit permission. This software is intended for local file backup and record viewing. The user is solely responsible for any consequences caused by unauthorized use, misuse, data loss, or privacy disputes.
 
 ---
 
