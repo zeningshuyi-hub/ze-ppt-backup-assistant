@@ -1,0 +1,36 @@
+GitHub 新建仓库步骤
+===================
+
+当前本地仓库已经整理好：
+
+D:\安卓软件\泽宁ppt-GitHub发布
+
+建议在 GitHub 新建私有仓库：
+
+仓库名：
+ze-ppt-backup-assistant
+
+描述：
+泽PPT备份助手：PPT、Word、PDF 本地自动备份工具
+
+可见性：
+Private
+
+注意：
+1. 不要勾选 Add a README file。
+2. 不要勾选 Add .gitignore。
+3. 不要选择 License。
+4. 创建好以后，把仓库地址发给 Codex。
+
+建议打开：
+https://github.com/new
+
+创建后仓库地址应类似：
+https://github.com/zeningshuyi-hub/ze-ppt-backup-assistant
+
+如果后面要推送本地仓库，可以在本目录执行：
+
+git remote add origin https://github.com/zeningshuyi-hub/ze-ppt-backup-assistant.git
+git push -u origin main
+
+如果弹出 GitHub 登录，按提示登录授权即可。
