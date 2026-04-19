@@ -233,6 +233,7 @@ namespace ZeBackupAssistant
             toolbar.Controls.Add(MakeButton("打开E盘备份", delegate { _service.OpenBackupRoot(1); }));
             toolbar.Controls.Add(MakeButton("打开当前备份", delegate { _service.OpenCurrentBackupRoot(); }));
             toolbar.Controls.Add(MakeButton("备份位置", delegate { ShowBackupLocationSettings(); }));
+            toolbar.Controls.Add(MakeButton("Wormhole网盘", delegate { OpenSelectedInWormhole(); }));
             toolbar.Controls.Add(MakeButton("删除选中", delegate { DeleteSelectedRecord(); }));
             toolbar.Controls.Add(MakeButton("清理失效", delegate { CleanMissingRecords(); }));
             toolbar.Controls.Add(MakeButton("清空记录", delegate { ClearRecords(); }));
@@ -444,6 +445,24 @@ namespace ZeBackupAssistant
 
             MessageBox.Show(this, "这条记录对应的 D/E 备份文件已经不存在了，可以点“清理失效”后重新备份。", "泽PPT备份助手", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return "";
+        }
+
+        private void OpenSelectedInWormhole()
+        {
+            BackupRecord record = GetSelectedOrNewestRecord();
+            if (record == null)
+            {
+                return;
+            }
+
+            string path = GetExistingBackupPathOrShow(record);
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
+            _service.OpenWormholeForFile(path);
+            _statusLabel.Text = "已打开 Wormhole网盘，并选中/复制文件路径：" + Path.GetFileName(path);
         }
 
         private void DeleteSelectedRecord()
@@ -1178,6 +1197,7 @@ namespace ZeBackupAssistant
             @"D:\" + BackupFolderName,
             @"E:\" + BackupFolderName
         };
+        private const string WormholeUrl = "https://wormhole.app/";
         private const string SettingsFileName = "settings.ini";
         private const int DefaultMaxBackupSizeMb = 0;
         private const string AutoStartValueName = "ZePPTBackupAssistant";
@@ -1650,6 +1670,33 @@ namespace ZeBackupAssistant
             }
 
             return "";
+        }
+
+        public void OpenWormholeForFile(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path) || !File.Exists(path))
+            {
+                throw new FileNotFoundException("没有找到要传输的备份文件。", path);
+            }
+
+            try
+            {
+                Clipboard.SetText(path);
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                Process.Start("explorer.exe", "/select,\"" + path + "\"");
+            }
+            catch
+            {
+            }
+
+            Process.Start(WormholeUrl);
+            Log("已打开 Wormhole网盘，并选中文件：" + path);
         }
 
         public List<BackupRecord> GetRecentBackups(int count)
