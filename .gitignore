@@ -1,4 +1,4 @@
-# Local settings and runtime files
+# Local settings and runtime files / 本地设置和运行文件
 settings.ini
 *.log
 *.tmp
@@ -6,24 +6,24 @@ settings.ini
 *.user
 backup-index.tsv
 
-# Secret config
+# Secret config / 私密配置
 upload-config.ini
 *.key
 *.pem
 *.pfx
 *.env
 
-# Build outputs
+# Build outputs / 编译输出
 bin/
 obj/
 *.pdb
 
-# Local tooling
+# Local tooling / 本地工具缓存
 .tooling/
 .vs/
 .idea/
 
-# Backups and customer files
+# Backups and customer files / 备份文件和客户文件
 泽宁PPPPPPPPTTTT备份/
 课堂PPT备份/
 *.ppt

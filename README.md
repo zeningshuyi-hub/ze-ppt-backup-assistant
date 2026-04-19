@@ -1,16 +1,18 @@
-# 泽PPT备份助手
+# 泽PPT备份助手 / Ze PPT Backup Assistant
 
 泽PPT备份助手是一款用于课堂、会议、培训等场景的本地文档自动备份工具。
 
 程序启动后会在后台运行，自动检测当前电脑打开的 PowerPoint、WPS 演示、Word/WPS 文字以及常见 PDF 文件，并将文件复制到本地备份目录。自动备份过程默认不弹窗，适合需要减少手动复制文件的电脑环境。
 
+Ze PPT Backup Assistant is a lightweight Windows tool for automatically backing up PPT, Word, and PDF files opened during classes, meetings, or training sessions.
+
 > 使用提醒：请在本人或已授权的电脑上使用本软件。因未获授权使用、误操作、数据丢失、隐私纠纷等造成的后果，由使用者自行承担。
 
-## 当前版本
+## 当前版本 / Version
 
 v5.0
 
-## 主要功能
+## 主要功能 / Features
 
 - 自动检测并备份 PPT / Word / PDF
 - 支持 Microsoft PowerPoint、Microsoft Word、WPS 演示、WPS 文字
@@ -29,15 +31,17 @@ v5.0
 - 首次运行显示免责声明
 - 关于/反馈窗口支持复制反馈邮箱
 
-## 发布包
+## 发布包 / Release Package
 
 正式给普通客户使用时，建议发送：
 
-`releases/v5.0/泽PPT标准备份版.zip`
+`发布包-releases/v5.0/泽PPT标准备份版.zip`
 
 标准备份版只做本地自动备份，不自动上传文件。
 
-## 默认备份目录
+For normal customer delivery, use the standard backup package above. It only performs local backup and does not upload files automatically.
+
+## 默认备份目录 / Default Backup Folder
 
 默认优先保存到：
 
@@ -54,32 +58,32 @@ C:\泽宁PPPPPPPPTTTT备份\
 
 如果 C 盘根目录也不可写，会保存到当前用户文档目录。
 
-## 仓库结构
+## 仓库结构 / Repository Structure
 
 ```text
-src/
-  ZeBackupAssistant.cs          源码
+源码-src/
+  ZeBackupAssistant.cs          源码 / Source code
 
-docs/
+文档-docs/
   详细功能完整说明.txt
   客户交付话术.txt
   售后排查说明.txt
 
-releases/v5.0/
+发布包-releases/v5.0/
   泽PPT标准备份版.zip
 
 CHANGELOG.txt
 README.md
 ```
 
-## 编译说明
+## 编译说明 / Build
 
 本项目为 C# WinForms 单文件程序，可使用 .NET Framework 4.x 自带的 `csc.exe` 编译。
 
 参考命令：
 
 ```powershell
-$src = "src\ZeBackupAssistant.cs"
+$src = "源码-src\ZeBackupAssistant.cs"
 $out = "泽PPT备份助手.exe"
 $csc = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
 & $csc /nologo /codepage:65001 /target:winexe /platform:anycpu "/out:$out" `
@@ -90,14 +94,14 @@ $csc = "C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
   $src
 ```
 
-## 注意事项
+## 注意事项 / Notes
 
 - 不要把真实 `upload-config.ini` 上传到公开仓库。
 - 不要上传客户备份文件、日志、去重索引、个人 API Key 或云盘口令。
 - 如果未来需要云盘增强版，建议只在私有仓库保存，并使用示例配置替代真实配置。
 - 正式对外销售时，优先分发标准备份版。
 
-## 反馈
+## 反馈 / Feedback
 
 有建议或者问题，欢迎反馈到：
 
