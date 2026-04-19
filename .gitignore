@@ -1,0 +1,35 @@
+# Local settings and runtime files
+settings.ini
+*.log
+*.tmp
+*.bak
+*.user
+backup-index.tsv
+
+# Secret config
+upload-config.ini
+*.key
+*.pem
+*.pfx
+*.env
+
+# Build outputs
+bin/
+obj/
+*.pdb
+
+# Local tooling
+.tooling/
+.vs/
+.idea/
+
+# Backups and customer files
+泽宁PPPPPPPPTTTT备份/
+课堂PPT备份/
+*.ppt
+*.pptx
+*.pps
+*.ppsx
+*.doc
+*.docx
+*.pdf
